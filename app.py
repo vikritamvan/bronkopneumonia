@@ -68,9 +68,14 @@ elif pilihan == "Deteksi":
     st.write("Unggah gambar X-ray paru untuk diprediksi (Normal atau Bronkopneumonia).")
 
     # Load model
-    model_path = "transfer_learning_mobilenetv2_model.keras"
-    try:
-        model = tf.keras.models.load_model(model_path)
+    model_path = tf.keras.models.load_model('transfer_learning_mobilenetv2_model.keras')
+try:
+    model_path = 'transfer_learning_mobilenetv2_model.keras'
+    model = tf.keras.models.load_model(model_path)
+except Exception as e:
+    st.error(f"Gagal memuat model. Pastikan file model ada di direktori yang sama. Error: {e}")
+
+# ... (lanjutkan dengan kode untuk memproses gambar dan melakukan prediksi)
     except Exception as e:
         st.error(f"Gagal memuat model. Pastikan file model ada di direktori yang sama. Error: {e}")
         st.stop() # Hentikan eksekusi jika model gagal dimuat
@@ -106,3 +111,4 @@ elif pilihan == "Deteksi":
 
         except Exception as e:
             st.error(f"Terjadi kesalahan saat memproses gambar. Error: {e}")
+
