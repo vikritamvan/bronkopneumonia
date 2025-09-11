@@ -69,9 +69,6 @@ elif pilihan == "Deteksi":
 
     # Load model
     model_path = tf.keras.models.load_model('transfer_learning_mobilenetv2_model.keras')
-try:
-    model_path = 'transfer_learning_mobilenetv2_model.keras'
-    model = tf.keras.models.load_model(model_path)
 except Exception as e:
     st.error(f"Gagal memuat model. Pastikan file model ada di direktori yang sama. Error: {e}")
 
@@ -106,5 +103,6 @@ except Exception as e:
 
         except Exception as e:
             st.error(f"Terjadi kesalahan saat memproses gambar. Error: {e}")
+
 
 
