@@ -37,17 +37,13 @@ if pilihan == "Beranda":
     st.markdown("""
     ### Metode yang Digunakan
     Aplikasi ini menggunakan model **Convolutional Neural Network (CNN)**
-    dengan pendekatan **Transfer Learning** yang memanfaatkan arsitektur **MobileNetV2** 
-    dalam melakukan klasifikasi citra rontgen.
+    dengan pendekatan **Transfer Learning** yang memanfaatkan arsitektur **MobileNetV2** dalam melakukan klasifikasi citra rontgen.
     """)
 
     # Inventor rata kiri + bernomor
     st.subheader("Inventor:")
     st.markdown("""
-    1. **Vikri Haikal**  
-    2. **Muhammad Habib Mudafiq**  
-    3. **Elsa Ika Rahmani**  
-    """)
+    1. **Vikri Haikal** 2. **Muhammad Habib Mudafiq** 3. **Elsa Ika Rahmani** """)
 
     # Universitas & Tahun rata tengah
     st.markdown(
@@ -61,19 +57,29 @@ if pilihan == "Beranda":
     )
 
 
-
 # --- Bagian Halaman Deteksi ---
 elif pilihan == "Deteksi":
     st.title("🔍 STAT-RESPIRA")
     st.write("Unggah gambar X-ray paru untuk diprediksi (Normal atau Bronkopneumonia).")
 
     # Load model
-    model = "transfer_learning_mobilenetv2_model.keras"
+    model_path = "transfer_learning_mobilenetv2_model.keras"
+
+    @st.cache_resource
+    def load_my_model(path):
+        try:
+            model = tf.keras.models.load_model(path)
+            return model
+        except Exception as e:
+            st.error(f"Terjadi kesalahan saat memuat model. Error: {e}")
+            return None
+
+    model = load_my_model(model_path)
+    
     # Pastikan urutan class sesuai dengan saat training
     class_names = ["Normal", "Bronkopneumonia"]
 
     # Fungsi prediksi
-    @st.cache_resource
     def predict_image(model, img, class_names, target_size=(224, 224)):
         img_resized = img.resize(target_size)
         img_array = image.img_to_array(img_resized)
@@ -94,11 +100,12 @@ elif pilihan == "Deteksi":
             st.image(img, caption="Gambar yang diunggah", use_column_width=True)
 
             if st.button("🩺 Diagnosa"):
-                predicted_class, confidence = predict_image(model, img, class_names)
-                st.markdown(f"### Hasil Prediksi: **{predicted_class}**")
-                st.write(f"Tingkat keyakinan: **{confidence:.2%}**")
+                if model:
+                    predicted_class, confidence = predict_image(model, img, class_names)
+                    st.markdown(f"### Hasil Prediksi: **{predicted_class}**")
+                    st.write(f"Tingkat keyakinan: **{confidence:.2%}**")
+                else:
+                    st.error("Model tidak dapat dimuat. Mohon periksa kembali file model Anda.")
 
         except Exception as e:
             st.error(f"Terjadi kesalahan saat memproses gambar. Error: {e}")
-
-
