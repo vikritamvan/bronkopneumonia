@@ -68,10 +68,7 @@ elif pilihan == "Deteksi":
     st.write("Unggah gambar X-ray paru untuk diprediksi (Normal atau Bronkopneumonia).")
 
     # Load model
-    model_path = "transfer_learning_mobilenetv2_model.keras"
-    try:
-        model = tf.keras.models.load_model(model_path)
-
+    model = "transfer_learning_mobilenetv2_model.keras"
     # Pastikan urutan class sesuai dengan saat training
     class_names = ["Normal", "Bronkopneumonia"]
 
@@ -103,4 +100,5 @@ elif pilihan == "Deteksi":
 
         except Exception as e:
             st.error(f"Terjadi kesalahan saat memproses gambar. Error: {e}")
+
 
