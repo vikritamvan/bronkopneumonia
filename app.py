@@ -75,11 +75,6 @@ try:
 except Exception as e:
     st.error(f"Gagal memuat model. Pastikan file model ada di direktori yang sama. Error: {e}")
 
-# ... (lanjutkan dengan kode untuk memproses gambar dan melakukan prediksi)
-    except Exception as e:
-        st.error(f"Gagal memuat model. Pastikan file model ada di direktori yang sama. Error: {e}")
-        st.stop() # Hentikan eksekusi jika model gagal dimuat
-
     # Pastikan urutan class sesuai dengan saat training
     class_names = ["Normal", "Bronkopneumonia"]
 
@@ -111,4 +106,5 @@ except Exception as e:
 
         except Exception as e:
             st.error(f"Terjadi kesalahan saat memproses gambar. Error: {e}")
+
 
