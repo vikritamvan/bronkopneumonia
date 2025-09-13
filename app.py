@@ -57,13 +57,13 @@ elif pilihan == "Deteksi":
     st.title("🔍 STAT-RESPIRA")
     st.write("Unggah gambar citra rontgen untuk diprediksi (Normal atau Bronkopneumonia).")
 
-    # Load model
-    model_path = "transfer_learning_mobilenetv2_model.keras"
-    try:
-        model = tf.keras.models.load_model(model_path)
-    except Exception as e:
-        st.error(f"Gagal memuat model. Pastikan file model ada di direktori yang sama. Error: {e}")
-        st.stop() # Hentikan eksekusi jika model gagal dimuat
+   # Load model
+model_path = "transfer_learning_mobilenetv2_model.h5" 
+try:
+    model = tf.keras.models.load_model(model_path)
+except Exception as e:
+    st.error(f"Gagal memuat model. Pastikan file model ada di direktori yang sama. Error: {e}")
+    st.stop() # Hentikan eksekusi jika model gagal dimuat
 
     # Pastikan urutan class sesuai dengan saat training
     class_names = ["Normal", "Bronkopneumonia"]
@@ -96,3 +96,4 @@ elif pilihan == "Deteksi":
 
         except Exception as e:
             st.error(f"Terjadi kesalahan saat memproses gambar. Error: {e}")
+
